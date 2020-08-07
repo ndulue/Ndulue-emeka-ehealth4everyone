@@ -3,8 +3,7 @@ package com.example.ndulueemeka.Model;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class filter_class {
-
+public class FilterModel {
 
         @SerializedName("id")
         private int id;
