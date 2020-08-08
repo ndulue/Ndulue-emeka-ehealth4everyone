@@ -1,5 +1,6 @@
 package com.example.ndulueemeka.Retrofit;
 
+import com.example.ndulueemeka.Common.Common;
 import com.example.ndulueemeka.Model.FilterModel;
 
 import java.util.List;
@@ -9,6 +10,6 @@ import retrofit2.http.GET;
 
 public interface IMYEMEKA {
 
-    @GET("b4cdeed3-327b-4591-9b06-aaf043e65497")
+    @GET("v3/"+ Common.apikey)
     Call<List<FilterModel>> geList();
 }

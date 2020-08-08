@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 //import android.app.AlertDialog;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     FilterAdapter adapter;
     Retrofit retrofit;
     IMYEMEKA myemeka;
+    @BindView(R.id.recycler_filter)
+    RecyclerView recycler_filter;
 
     @Override
     protected void onDestroy() {
@@ -48,19 +51,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        ButterKnife.bind(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        //recyclerview_order.setLayoutManager(linearLayoutManager);
+        recycler_filter.setLayoutManager(linearLayoutManager);
+        //recycler_filter.setHasFixedSize(true);
     }
 
     private void init() {
+        ButterKnife.bind(this);
         myemeka = RetrofitClient.getInstance(Common.BASE_URL).create(IMYEMEKA.class);
         //dialog = new SpotsDialog.Builder().setContext(MainActivity.this).setCancelable(false).build();
     }
 
     private void getConPrice() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://run.mocky.io/v3/")
+                .baseUrl("https://run.mocky.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         myemeka = retrofit.create(IMYEMEKA.class);
@@ -69,13 +73,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<FilterModel>> call, Response<List<FilterModel>> response) {
                 if (response.isSuccessful() ||  response.code() == 200){
-                    //String result = String.valueOf(response.body());
-                    List<FilterModel> filterModels =  response.body();
 
-                    for (FilterModel filterModel : filterModels){
-                        String end_date = String.valueOf(filterModel.getEndYear());
-                        Toast.makeText(MainActivity.this, " "+end_date, Toast.LENGTH_LONG).show();
-                    }
+                        List<FilterModel> filterModels =  response.body();
+                        adapter = new FilterAdapter(getApplicationContext(),  filterModels);
+                        adapter.notifyDataSetChanged();
+                        recycler_filter.setAdapter(adapter);
+                        //for (FilterModel filterModel : filterModels){
+                            //String end_date = String.valueOf(filterModel.getEndYear());
+                            //Toast.makeText(MainActivity.this, " "+end_date, Toast.LENGTH_LONG).show();
+                        //}
+
 
                 }else{
                     Toast.makeText(MainActivity.this, "UnSuccessfull", Toast.LENGTH_LONG).show();

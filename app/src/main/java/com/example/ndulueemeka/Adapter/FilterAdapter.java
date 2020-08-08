@@ -37,11 +37,10 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.filter_country.setText(new StringBuilder(String.valueOf(filterModelList.get(position).getColors())));
-        holder.filter_gender.setText(new StringBuilder(filterModelList.get(position).getGender()));
-        holder.filter_date_start.setText(new StringBuilder(filterModelList.get(position).getStartYear()));
-        holder.filter_date_end.setText(new StringBuilder(filterModelList.get(position).getEndYear()));
-        holder.filter_color.setText(new StringBuilder(String.valueOf(filterModelList.get(position).getColors())));
+        holder.filter_country.setText(new StringBuilder(String.valueOf(filterModelList.get(position).getCountries().isEmpty() ? "No Country" : String.valueOf(filterModelList.get(position).getCountries()).substring(1, String.valueOf(filterModelList.get(position).getCountries()).length()-1))));
+        holder.filter_gender.setText(new StringBuilder(filterModelList.get(position).getGender().equals("") ? "No Gender" : filterModelList.get(position).getGender() ));
+        holder.filter_date.setText(new StringBuilder(filterModelList.get(position).getStartYear() + " - " + filterModelList.get(position).getEndYear()));
+        holder.filter_color.setText(new StringBuilder(String.valueOf(filterModelList.get(position).getColors().isEmpty() ? "No Color" : String.valueOf(filterModelList.get(position).getColors()).substring(1, String.valueOf(filterModelList.get(position).getColors()).length()-1))));
     }
 
     @Override
@@ -51,10 +50,8 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.filter_date_start)
-        TextView filter_date_start;
-        @BindView(R.id.filter_date_end)
-        TextView filter_date_end;
+        @BindView(R.id.filter_date)
+        TextView filter_date;
         @BindView(R.id.filter_gender)
         TextView filter_gender;
         @BindView(R.id.filter_country)
