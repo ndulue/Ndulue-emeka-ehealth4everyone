@@ -1,13 +1,15 @@
 package com.example.ndulueemeka;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import android.app.AlertDialog;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.ndulueemeka.Adapter.FilterAdapter;
@@ -20,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,12 +31,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    AlertDialog dialog;
+    AlertDialog spotDialog;
     FilterAdapter adapter;
     Retrofit retrofit;
     IMYEMEKA myemeka;
     @BindView(R.id.recycler_filter)
     RecyclerView recycler_filter;
+    @BindView(R.id.btn)
+    Button btn;
 
     @Override
     protected void onDestroy() {
@@ -47,19 +52,26 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         init();
         initView();
+        spotDialog.show();
         getConPrice();
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CarOwnersActivity.class));
+            }
+        });
     }
 
     private void initView() {
+        spotDialog = new SpotsDialog.Builder().setContext(MainActivity.this).setCancelable(false).build();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler_filter.setLayoutManager(linearLayoutManager);
-        //recycler_filter.setHasFixedSize(true);
     }
 
     private void init() {
         ButterKnife.bind(this);
         myemeka = RetrofitClient.getInstance(Common.BASE_URL).create(IMYEMEKA.class);
-        //dialog = new SpotsDialog.Builder().setContext(MainActivity.this).setCancelable(false).build();
     }
 
     private void getConPrice() {
@@ -72,29 +84,24 @@ public class MainActivity extends AppCompatActivity {
         filterModelCall.enqueue(new Callback<List<FilterModel>>() {
             @Override
             public void onResponse(Call<List<FilterModel>> call, Response<List<FilterModel>> response) {
+                spotDialog.dismiss();
                 if (response.isSuccessful() ||  response.code() == 200){
-
                         List<FilterModel> filterModels =  response.body();
                         adapter = new FilterAdapter(getApplicationContext(),  filterModels);
                         adapter.notifyDataSetChanged();
                         recycler_filter.setAdapter(adapter);
-                        //for (FilterModel filterModel : filterModels){
-                            //String end_date = String.valueOf(filterModel.getEndYear());
-                            //Toast.makeText(MainActivity.this, " "+end_date, Toast.LENGTH_LONG).show();
-                        //}
-
-
                 }else{
                     Toast.makeText(MainActivity.this, "UnSuccessfull", Toast.LENGTH_LONG).show();
                 }
-
             }
 
             @Override
             public void onFailure(Call<List<FilterModel>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "eeeeeeeeeeee" + t.getMessage(), Toast.LENGTH_LONG).show();
+                spotDialog.dismiss();
+                Toast.makeText(MainActivity.this, "Cant Fetch details, check your internet connection" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
+
 
 }

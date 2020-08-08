@@ -113,4 +113,20 @@ public class CarOwnerModel {
     public void setBio(String bio) {
         this.bio = bio;
     }
+
+    @Override
+    public String toString() {
+        return "CarOwnerModel{" +
+                "first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", email='" + email + '\'' +
+                ", country='" + country + '\'' +
+                ", car_model='" + car_model + '\'' +
+                ", car_model_year=" + car_model_year +
+                ", car_color='" + car_color + '\'' +
+                ", gender='" + gender + '\'' +
+                ", job_title='" + job_title + '\'' +
+                ", bio='" + bio + '\'' +
+                '}';
+    }
 }
