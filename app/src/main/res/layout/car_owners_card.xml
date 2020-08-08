@@ -46,7 +46,6 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:maxLength="55"
                         android:layout_height="wrap_content"
                         android:id="@+id/full_name_co"
                         android:layout_alignParentEnd="true"
@@ -68,13 +67,13 @@
                         android:textSize="20sp"/>
 
                     <TextView
+                        android:id="@+id/email_co"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:id="@+id/email_co"
-                        android:textStyle="bold"
                         android:text="Fidelity bank"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -90,13 +89,13 @@
                         android:textSize="20sp"/>
 
                     <TextView
+                        android:id="@+id/country_co"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/country_co"
                         android:layout_alignParentEnd="true"
-                        android:textStyle="bold"
                         android:text="6172311466"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -113,13 +112,13 @@
                         android:textSize="20sp"/>
 
                     <TextView
+                        android:id="@+id/car_details_co"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/car_details_co"
                         android:layout_alignParentEnd="true"
-                        android:textStyle="bold"
                         android:text="#89000"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 

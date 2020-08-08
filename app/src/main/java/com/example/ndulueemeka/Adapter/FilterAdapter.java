@@ -37,10 +37,10 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.filter_country.setText(new StringBuilder(String.valueOf(filterModelList.get(position).getCountries().isEmpty() ? "No Country" : String.valueOf(filterModelList.get(position).getCountries()).substring(1, String.valueOf(filterModelList.get(position).getCountries()).length()-1))));
-        holder.filter_gender.setText(new StringBuilder(filterModelList.get(position).getGender().equals("") ? "No Gender" : filterModelList.get(position).getGender() ));
+        holder.filter_country.setText(new StringBuilder(filterModelList.get(position).getCountries().isEmpty() ? "All" : String.valueOf(filterModelList.get(position).getCountries()).substring(1, String.valueOf(filterModelList.get(position).getCountries()).length()-1)));
+        holder.filter_gender.setText(new StringBuilder(filterModelList.get(position).getGender().equals("") ? "All" : filterModelList.get(position).getGender() ));
         holder.filter_date.setText(new StringBuilder(filterModelList.get(position).getStartYear() + " - " + filterModelList.get(position).getEndYear()));
-        holder.filter_color.setText(new StringBuilder(String.valueOf(filterModelList.get(position).getColors().isEmpty() ? "No Color" : String.valueOf(filterModelList.get(position).getColors()).substring(1, String.valueOf(filterModelList.get(position).getColors()).length()-1))));
+        holder.filter_color.setText(new StringBuilder(filterModelList.get(position).getColors().isEmpty() ? "All" : String.valueOf(filterModelList.get(position).getColors()).substring(1, String.valueOf(filterModelList.get(position).getColors()).length()-1)));
     }
 
     @Override
