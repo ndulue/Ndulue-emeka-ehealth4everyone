@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -37,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
     IMYEMEKA myemeka;
     @BindView(R.id.recycler_filter)
     RecyclerView recycler_filter;
-    @BindView(R.id.btn)
-    Button btn;
 
     @Override
     protected void onDestroy() {
@@ -53,20 +52,15 @@ public class MainActivity extends AppCompatActivity {
         init();
         initView();
         spotDialog.show();
-        getConPrice();
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CarOwnersActivity.class));
-            }
-        });
+        getFilter();
     }
 
     private void initView() {
         spotDialog = new SpotsDialog.Builder().setContext(MainActivity.this).setCancelable(false).build();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler_filter.setLayoutManager(linearLayoutManager);
+        recycler_filter.setAdapter(adapter);
     }
 
     private void init() {
@@ -74,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         myemeka = RetrofitClient.getInstance(Common.BASE_URL).create(IMYEMEKA.class);
     }
 
-    private void getConPrice() {
+    private void getFilter() {
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://run.mocky.io/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -87,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 spotDialog.dismiss();
                 if (response.isSuccessful() ||  response.code() == 200){
                         List<FilterModel> filterModels =  response.body();
+                        Log.d("Query", "APi: " + response.body());
                         adapter = new FilterAdapter(getApplicationContext(),  filterModels);
                         adapter.notifyDataSetChanged();
                         recycler_filter.setAdapter(adapter);

@@ -20,7 +20,7 @@ public class CarOwnerModel {
     private String car_model;
 
     @SerializedName("car_model_year")
-    private int car_model_year;
+    private String car_model_year;
 
     @SerializedName("car_color")
     private String car_color;
@@ -74,11 +74,11 @@ public class CarOwnerModel {
         this.car_model = car_model;
     }
 
-    public int getCar_model_year() {
+    public String getCar_model_year() {
         return car_model_year;
     }
 
-    public void setCar_model_year(int car_model_year) {
+    public void setCar_model_year(String car_model_year) {
         this.car_model_year = car_model_year;
     }
 

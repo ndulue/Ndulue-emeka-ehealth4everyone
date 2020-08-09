@@ -1,41 +1,40 @@
 package com.example.ndulueemeka;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import com.example.ndulueemeka.Adapter.CarOwnerAdapter;
-import com.example.ndulueemeka.Adapter.FilterAdapter;
-import com.example.ndulueemeka.Common.Common;
+import com.example.ndulueemeka.Common.CsvReader;
 import com.example.ndulueemeka.Model.CarOwnerModel;
-import com.example.ndulueemeka.Retrofit.IMYEMEKA;
-import com.example.ndulueemeka.Retrofit.RetrofitClient;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
-import retrofit2.Retrofit;
 
-public class CarOwnersActivity extends AppCompatActivity {
+public class CarOwnersActivity extends AppCompatActivity{
 
     AlertDialog spotDialog;
     CarOwnerAdapter adapter;
-    Retrofit retrofit;
-    IMYEMEKA myemeka;
+    int start = 1;
+    int limit = 10;
+    List<CarOwnerModel> carOwnerModelList = new ArrayList<>();
     @BindView(R.id.recycler_car_owner)
     RecyclerView recycler_car_owner;
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,49 +42,85 @@ public class CarOwnersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_car_owners);
         init();
         initView();
-        spotDialog.show();
-        readCarOwner();
+        //spotDialog.show();
+        readCarOwner(0,10);
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == v.getChildAt(0).getMeasuredHeight()-v.getMeasuredHeight()){
+                    start++;
+                    //progress_bar.setVisibility(View.VISIBLE);
+                    readCarOwner(start, limit);
+                }
+            }
+        });
 
     }
 
-    private List<CarOwnerModel> carOwnerModelList = new ArrayList<>();
-    private void readCarOwner() {
-        InputStream is = getResources().openRawResource(R.raw.car_ownsers_data);
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(is, Charset.forName("UTF-8"))
-        );
-        String line = "";
-        try {
-            reader.readLine();
-            while ( (line = reader.readLine()) !=  null){
-                Log.d("MyActivity", "Line " + line);
-                String[] tokens = line.split(",");
+    //carOwnerModelList = new ArrayList<>();
+    private void readCarOwner(int start, int limit) {
 
-                CarOwnerModel model = new CarOwnerModel();
-                model.setFirst_name(tokens[2]);
-                model.setLast_name(tokens[2]);
-                model.setEmail(tokens[2]);
-                model.setGender(tokens[2]);
-                model.setBio(tokens[2]);
-                model.setCountry(tokens[2]);
-                carOwnerModelList.add(model);
-                Log.d("MyActivity", "Created " + model);
-            }
-        } catch (IOException e){
-            Log.wtf("MyActivity", "Error");
-            e.printStackTrace();
+        InputStream inputStream = getResources().openRawResource(R.raw.car_ownsers_data);
+        CsvReader csv = new CsvReader(inputStream);
+        List<String[]> ownerList = csv.readList().subList(1,10);
+        //carOwnerModelList.toString() = csv.readList().subList(0,10);
+
+        for (String[] resultList : ownerList) {
+            Log.d("MyActivity", "List " + resultList[1] + " --- "+ resultList[2] + " --- "+ resultList[3] + " --- "+ resultList[4] + " --- "+ resultList[5] + " --- "+ resultList[6] );
+            CarOwnerModel model = new CarOwnerModel();
+            model.setFirst_name(resultList[1]);
+            model.setLast_name(resultList[2]);
+            model.setEmail(resultList[3]);
+            model.setCountry(resultList[4]);
+            model.setCar_model(resultList[5]);
+            model.setCar_model_year(resultList[6]);
+            model.setCar_color(resultList[7]);
+            model.setGender(resultList[8]);
+            model.setJob_title(resultList[9]);
+            model.setBio(resultList[10]);
+
+            carOwnerModelList.add(model);
+
+            Log.d("MyActivity", "Result " + model.getGender());
         }
+        adapter = new CarOwnerAdapter(getApplicationContext(),  carOwnerModelList);
+        adapter.notifyDataSetChanged();
+        recycler_car_owner.setAdapter(adapter);
+
+        //progress_bar.setVisibility(View.GONE);
 
     }
 
     private void initView() {
         spotDialog = new SpotsDialog.Builder().setContext(CarOwnersActivity.this).setCancelable(false).build();
+        adapter = new CarOwnerAdapter( CarOwnersActivity.this, carOwnerModelList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        //recycler_filter.setLayoutManager(linearLayoutManager);
+        recycler_car_owner.setLayoutManager(linearLayoutManager);
+        recycler_car_owner.setAdapter(adapter);
+
     }
 
     private void init() {
         ButterKnife.bind(this);
-        //myemeka = RetrofitClient.getInstance(Common.BASE_URL).create(IMYEMEKA.class);
     }
+
+/*
+    @Override
+    public void onLoadMore() {
+        if (adapter.getItemCount() < maxData){
+            carOwnerModelList.add(null);
+            adapter.notifyItemInserted(carOwnerModelList.size()-1);
+
+            readCarOwner(adapter.getItemCount()+1, adapter.getItemCount()+10);
+            adapter.notifyDataSetChanged();
+            adapter.setLoaded();
+        }else{
+            Toast.makeText(this, "Max Data to load", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+ */
+
+
 }
