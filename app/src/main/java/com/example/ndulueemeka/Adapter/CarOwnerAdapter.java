@@ -41,13 +41,15 @@ public class CarOwnerAdapter extends RecyclerView.Adapter<CarOwnerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.full_name_co.setText(new StringBuilder(carOwnerModelList.get(position).getFirst_name() + " - " + carOwnerModelList.get(position).getLast_name())   );
-        holder.email_co.setText(new StringBuilder(carOwnerModelList.get(position).getEmail()));
-        holder.country_co.setText(new StringBuilder(carOwnerModelList.get(position).getCountry()));
-        holder.gender_co.setText(new StringBuilder(carOwnerModelList.get(position).getGender()));
-        holder.job_title_co.setText(new StringBuilder(carOwnerModelList.get(position).getJob_title()));
-        holder.bio_co.setText(new StringBuilder(carOwnerModelList.get(position).getBio()));
-        holder.car_details_co.setText(new StringBuilder(carOwnerModelList.get(position).getCar_model()));
+        holder.full_name_co.setText(new StringBuilder(carOwnerModelList.get(position).getFirst_name() + " " + carOwnerModelList.get(position).getLast_name()));
+        holder.email_co.setText(new StringBuilder(carOwnerModelList.get(position).getEmail().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getEmail())));
+        holder.country_co.setText(new StringBuilder(carOwnerModelList.get(position).getCountry().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getCountry())));
+        holder.gender_co.setText(new StringBuilder(carOwnerModelList.get(position).getGender().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getGender())));
+        holder.job_title_co.setText(new StringBuilder(carOwnerModelList.get(position).getJob_title().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getJob_title())));
+        holder.bio_co.setText(new StringBuilder(carOwnerModelList.get(position).getBio().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getBio())));
+        holder.car_make_co.setText(new StringBuilder(carOwnerModelList.get(position).getCar_model().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getCar_model())));
+        holder.car_year_co.setText(new StringBuilder(carOwnerModelList.get(position).getCar_model_year().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getCar_model_year())));
+        holder.car_color_co.setText(new StringBuilder(carOwnerModelList.get(position).getCar_model_year().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getCar_color())));
 
     }
 
@@ -64,8 +66,12 @@ public class CarOwnerAdapter extends RecyclerView.Adapter<CarOwnerAdapter.ViewHo
         TextView email_co;
         @BindView(R.id.country_co)
         TextView country_co;
-        @BindView(R.id.car_details_co)
-        TextView car_details_co;
+        @BindView(R.id.car_make_co)
+        TextView car_make_co;
+        @BindView(R.id.car_color_co)
+        TextView car_color_co;
+        @BindView(R.id.car_year_co)
+        TextView car_year_co;
         @BindView(R.id.gender_co)
         TextView gender_co;
         @BindView(R.id.job_title_co)

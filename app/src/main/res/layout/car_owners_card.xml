@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="9dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         android:layout_height="wrap_content">
@@ -17,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:background="@drawable/card_bg"
             android:id="@+id/card_layout"
             android:orientation="horizontal">
 
@@ -25,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="3dp"
-                android:background="@color/colorAccent"/>
+                android:background="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,13 +43,17 @@
                         android:maxLength="55"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Full Name:"
+                        android:textColor="@color/colorBlack"
+                        android:id="@+id/full_name_co_text"
+                        android:text="Full Name: "
                         android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
                         android:id="@+id/full_name_co"
+                        android:layout_toEndOf="@id/full_name_co_text"
                         android:layout_alignParentEnd="true"
                         android:text="Ndulue Emeka Philip"
                         android:textStyle="bold"
@@ -61,9 +67,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:maxLength="55"
+                        android:textColor="@color/colorBlack"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Email:"
+                        android:id="@+id/email_co_text"
+                        android:text="Email: "
                         android:textSize="20sp"/>
 
                     <TextView
@@ -71,6 +79,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:textColor="@color/colorBlack"
+                        android:layout_toEndOf="@id/email_co_text"
                         android:text="Fidelity bank"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -84,17 +94,20 @@
                         android:layout_width="wrap_content"
                         android:maxLength="55"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
                         android:textStyle="bold"
-                        android:text="Country:"
-                        android:textSize="20sp"/>
+                        android:id="@+id/country_co_text"
+                        android:text="Country: "
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:id="@+id/country_co"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/colorBlack"
+                        android:layout_toEndOf="@id/country_co_text"
                         android:text="6172311466"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -108,16 +121,72 @@
                         android:maxLength="55"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Car Make, Color and year:"
-                        android:textSize="20sp"/>
+                        android:textColor="@color/colorBlack"
+                        android:id="@+id/car_make_co_text"
+                        android:text="Car Make: "
+                        android:textSize="16sp"/>
 
                     <TextView
-                        android:id="@+id/car_details_co"
+                        android:id="@+id/car_make_co"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_toEndOf="@id/car_make_co_text"
+                        android:text="#89000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/car_color_co_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLength="55"
+                        android:text="Color: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/car_color_co"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_toEndOf="@id/car_color_co_text"
+                        android:text="#89000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:maxLength="55"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlack"
+                        android:text="Car Year: "
+                        android:id="@+id/car_year_co_text"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/car_year_co"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_toEndOf="@id/car_year_co_text"
                         android:layout_alignParentEnd="true"
                         android:text="#89000"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -129,16 +198,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:maxLength="55"
+                        android:textColor="@color/colorBlack"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Gender:"
+                        android:id="@+id/gender_co_text"
+                        android:text="Gender: "
                         android:textSize="20sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/gender_co"
-                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/colorBlack"
+                        android:layout_toEndOf="@id/gender_co_text"
                         android:textStyle="bold"
                         android:text="$90"
                         android:textSize="20sp"/>
@@ -154,17 +226,20 @@
                         android:maxLength="55"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Job Title:"
-                        android:textSize="20sp"/>
+                        android:id="@+id/job_title_co_text"
+                        android:textColor="@color/colorBlack"
+                        android:text="Job Title: "
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/job_title_co"
-                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@id/job_title_co_text"
+                        android:textColor="@color/colorBlack"
                         android:textStyle="bold"
                         android:text="Amazon"
-                        android:textSize="20sp"/>
+                        android:textSize="16sp"/>
 
                 </RelativeLayout>
 
@@ -177,17 +252,20 @@
                         android:maxLength="55"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Bio:"
-                        android:textSize="20sp"/>
+                        android:id="@+id/bio_co_text"
+                        android:textColor="@color/colorBlack"
+                        android:text="Bio: "
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/bio_co"
-                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/colorBlack"
+                        android:layout_toEndOf="@id/bio_co_text"
                         android:textStyle="bold"
                         android:text="98372468736247"
-                        android:textSize="20sp"/>
+                        android:textSize="16sp"/>
 
                 </RelativeLayout>
 
