@@ -46,7 +46,7 @@ public class CarOwnerAdapter extends RecyclerView.Adapter<CarOwnerAdapter.ViewHo
         holder.country_co.setText(new StringBuilder(carOwnerModelList.get(position).getCountry().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getCountry())));
         holder.gender_co.setText(new StringBuilder(carOwnerModelList.get(position).getGender().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getGender())));
         holder.job_title_co.setText(new StringBuilder(carOwnerModelList.get(position).getJob_title().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getJob_title())));
-        holder.bio_co.setText(new StringBuilder(carOwnerModelList.get(position).getBio().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getBio())));
+        holder.bio_co.setText(new StringBuilder(carOwnerModelList.get(position).getBio().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getBio()).substring(1, String.valueOf(carOwnerModelList.get(position).getBio()).length())));
         holder.car_make_co.setText(new StringBuilder(carOwnerModelList.get(position).getCar_model().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getCar_model())));
         holder.car_year_co.setText(new StringBuilder(carOwnerModelList.get(position).getCar_model_year().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getCar_model_year())));
         holder.car_color_co.setText(new StringBuilder(carOwnerModelList.get(position).getCar_model_year().isEmpty() ? " " : String.valueOf(carOwnerModelList.get(position).getCar_color())));

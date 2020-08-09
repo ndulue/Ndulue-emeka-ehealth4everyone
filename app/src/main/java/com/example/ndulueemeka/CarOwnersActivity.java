@@ -26,6 +26,7 @@ public class CarOwnersActivity extends AppCompatActivity{
 
     AlertDialog spotDialog;
     CarOwnerAdapter adapter;
+    CarOwnerModel model = new CarOwnerModel();
     int start = 1;
     int limit = 10;
     List<CarOwnerModel> carOwnerModelList = new ArrayList<>();
@@ -43,7 +44,7 @@ public class CarOwnersActivity extends AppCompatActivity{
         init();
         initView();
         //spotDialog.show();
-        readCarOwner(0,10);
+        readCarOwner(1,10);
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -57,17 +58,15 @@ public class CarOwnersActivity extends AppCompatActivity{
 
     }
 
-    //carOwnerModelList = new ArrayList<>();
     private void readCarOwner(int start, int limit) {
 
         InputStream inputStream = getResources().openRawResource(R.raw.car_ownsers_data);
         CsvReader csv = new CsvReader(inputStream);
-        List<String[]> ownerList = csv.readList().subList(1,10);
+        List<String[]> ownerList = csv.readList().subList(start,limit);
         //carOwnerModelList.toString() = csv.readList().subList(0,10);
 
+        int count = 1;
         for (String[] resultList : ownerList) {
-            Log.d("MyActivity", "List " + resultList[1] + " --- "+ resultList[2] + " --- "+ resultList[3] + " --- "+ resultList[4] + " --- "+ resultList[5] + " --- "+ resultList[6] );
-            CarOwnerModel model = new CarOwnerModel();
             model.setFirst_name(resultList[1]);
             model.setLast_name(resultList[2]);
             model.setEmail(resultList[3]);
@@ -80,23 +79,24 @@ public class CarOwnersActivity extends AppCompatActivity{
             model.setBio(resultList[10]);
 
             carOwnerModelList.add(model);
+            Log.d("MyActivity", "Result " + carOwnerModelList);
 
-            Log.d("MyActivity", "Result " + model.getGender());
+
+
         }
+        //Log.d("MyActivity", "Result " + carOwnerModelList);
         adapter = new CarOwnerAdapter(getApplicationContext(),  carOwnerModelList);
         adapter.notifyDataSetChanged();
         recycler_car_owner.setAdapter(adapter);
-
         //progress_bar.setVisibility(View.GONE);
 
     }
 
     private void initView() {
         spotDialog = new SpotsDialog.Builder().setContext(CarOwnersActivity.this).setCancelable(false).build();
-        adapter = new CarOwnerAdapter( CarOwnersActivity.this, carOwnerModelList);
+        //adapter = new CarOwnerAdapter( CarOwnersActivity.this, carOwnerModelList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler_car_owner.setLayoutManager(linearLayoutManager);
-        recycler_car_owner.setAdapter(adapter);
 
     }
 

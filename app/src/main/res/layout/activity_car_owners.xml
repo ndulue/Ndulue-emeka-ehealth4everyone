@@ -20,7 +20,7 @@
 
             <Toolbar
                 android:layout_width="match_parent"
-                android:title="My Filter"
+                android:title="Car Owners"
                 android:titleTextColor="@color/colorWhite"
                 android:layout_height="?attr/actionBarSize"/>
 
