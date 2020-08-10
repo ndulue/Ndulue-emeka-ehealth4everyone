@@ -43,7 +43,7 @@ public class CarOwnersActivity extends AppCompatActivity{
         setContentView(R.layout.activity_car_owners);
         init();
         initView();
-        //spotDialog.show();
+        spotDialog.show();
         readCarOwner(1,10);
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -60,12 +60,11 @@ public class CarOwnersActivity extends AppCompatActivity{
 
     //read Csv data and display
     private void readCarOwner(int start, int limit) {
-
         InputStream inputStream = getResources().openRawResource(R.raw.car_ownsers_data);
         CsvReader csv = new CsvReader(inputStream);
         List<String[]> ownerList = csv.readList().subList(start,limit);
         //carOwnerModelList.toString() = csv.readList().subList(0,10);
-
+        spotDialog.dismiss();
         for (String[] resultList : ownerList) {
             model.setFirst_name(resultList[1]);
             model.setLast_name(resultList[2]);
