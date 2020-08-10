@@ -4,6 +4,23 @@ import com.google.gson.annotations.SerializedName;
 // model class for Filter in HomeActivity
 public class CarOwnerModel {
 
+
+    public CarOwnerModel() {
+    }
+
+    public CarOwnerModel(String first_name, String last_name, String email, String country, String car_model, String car_model_year, String car_color, String gender, String job_title, String bio) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.country = country;
+        this.car_model = car_model;
+        this.car_model_year = car_model_year;
+        this.car_color = car_color;
+        this.gender = gender;
+        this.job_title = job_title;
+        this.bio = bio;
+    }
+
     @SerializedName("first_name")
     private String first_name;
 
