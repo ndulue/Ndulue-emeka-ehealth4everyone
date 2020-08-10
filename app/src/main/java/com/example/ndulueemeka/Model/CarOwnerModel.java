@@ -1,7 +1,7 @@
 package com.example.ndulueemeka.Model;
 
 import com.google.gson.annotations.SerializedName;
-
+// model class for Filter in HomeActivity
 public class CarOwnerModel {
 
     @SerializedName("first_name")

@@ -2,7 +2,7 @@ package com.example.ndulueemeka.Model;
 
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
-
+// model class for Filter in HomeActivity
 public class FilterModel {
 
         @SerializedName("id")

@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 
 public interface IMYEMEKA {
 
+    //retrofit get http call
     @GET("v3/"+ Common.apikey)
     Call<List<FilterModel>> geList();
 }

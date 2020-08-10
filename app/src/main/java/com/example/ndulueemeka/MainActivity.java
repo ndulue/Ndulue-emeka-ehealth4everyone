@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     FilterAdapter adapter;
     Retrofit retrofit;
     IMYEMEKA myemeka;
+    LinearLayoutManager linearLayoutManager;
     @BindView(R.id.recycler_filter)
     RecyclerView recycler_filter;
 
@@ -55,20 +56,24 @@ public class MainActivity extends AppCompatActivity {
         getFilter();
     }
 
+    //initialize spotDialog and linearLayoutManager
     private void initView() {
         spotDialog = new SpotsDialog.Builder().setContext(MainActivity.this).setCancelable(false).build();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler_filter.setLayoutManager(linearLayoutManager);
-        recycler_filter.setAdapter(adapter);
     }
 
+    //bind view Holder with butter knife
     private void init() {
         ButterKnife.bind(this);
         myemeka = RetrofitClient.getInstance(Common.BASE_URL).create(IMYEMEKA.class);
     }
 
+    //get filter data from the api
     private void getFilter() {
+
+        //retrofit get api
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://run.mocky.io/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -78,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         filterModelCall.enqueue(new Callback<List<FilterModel>>() {
             @Override
             public void onResponse(Call<List<FilterModel>> call, Response<List<FilterModel>> response) {
+                //dialog dismisses after result is gotten
                 spotDialog.dismiss();
                 if (response.isSuccessful() ||  response.code() == 200){
                         List<FilterModel> filterModels =  response.body();
@@ -92,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<FilterModel>> call, Throwable t) {
+                //Error message on failure to connect to server
                 spotDialog.dismiss();
                 Toast.makeText(MainActivity.this, "Cant Fetch details, check your internet connection" + t.getMessage(), Toast.LENGTH_LONG).show();
             }

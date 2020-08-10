@@ -10,10 +10,12 @@ import java.util.List;
 public class CsvReader {
     InputStream inputStream;
 
+    //CSV constructor
     public CsvReader(InputStream inputStream) {
         this.inputStream = inputStream;
     }
 
+    //method that returns List of String
     public List<String[]> readList(){
         List<String[]> resultList = new ArrayList<>();
 

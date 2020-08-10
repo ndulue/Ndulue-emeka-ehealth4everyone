@@ -58,6 +58,7 @@ public class CarOwnersActivity extends AppCompatActivity{
 
     }
 
+    //read Csv data and display
     private void readCarOwner(int start, int limit) {
 
         InputStream inputStream = getResources().openRawResource(R.raw.car_ownsers_data);
@@ -65,7 +66,6 @@ public class CarOwnersActivity extends AppCompatActivity{
         List<String[]> ownerList = csv.readList().subList(start,limit);
         //carOwnerModelList.toString() = csv.readList().subList(0,10);
 
-        int count = 1;
         for (String[] resultList : ownerList) {
             model.setFirst_name(resultList[1]);
             model.setLast_name(resultList[2]);
@@ -80,9 +80,6 @@ public class CarOwnersActivity extends AppCompatActivity{
 
             carOwnerModelList.add(model);
             Log.d("MyActivity", "Result " + carOwnerModelList);
-
-
-
         }
         //Log.d("MyActivity", "Result " + carOwnerModelList);
         adapter = new CarOwnerAdapter(getApplicationContext(),  carOwnerModelList);
@@ -92,6 +89,7 @@ public class CarOwnersActivity extends AppCompatActivity{
 
     }
 
+    //initialize spotDialog and linearLayoutManager
     private void initView() {
         spotDialog = new SpotsDialog.Builder().setContext(CarOwnersActivity.this).setCancelable(false).build();
         //adapter = new CarOwnerAdapter( CarOwnersActivity.this, carOwnerModelList);
@@ -100,27 +98,9 @@ public class CarOwnersActivity extends AppCompatActivity{
 
     }
 
+    //bind view Holder with butter knife
     private void init() {
         ButterKnife.bind(this);
     }
-
-/*
-    @Override
-    public void onLoadMore() {
-        if (adapter.getItemCount() < maxData){
-            carOwnerModelList.add(null);
-            adapter.notifyItemInserted(carOwnerModelList.size()-1);
-
-            readCarOwner(adapter.getItemCount()+1, adapter.getItemCount()+10);
-            adapter.notifyDataSetChanged();
-            adapter.setLoaded();
-        }else{
-            Toast.makeText(this, "Max Data to load", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
- */
-
 
 }
