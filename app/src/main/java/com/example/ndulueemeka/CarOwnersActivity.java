@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.ndulueemeka.Adapter.CarOwnerAdapter;
-import com.example.ndulueemeka.Common.CsvReader;
+import com.example.ndulueemeka.Common.CSVRead;
 import com.example.ndulueemeka.Model.CarOwnerModel;
 
-import java.io.InputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +29,7 @@ public class CarOwnersActivity extends AppCompatActivity{
     CarOwnerModel model = new CarOwnerModel();
     int start = 1;
     int limit = 10;
+    int count = 1;
     List<CarOwnerModel> carOwnerModelList = new ArrayList<>();
     @BindView(R.id.recycler_car_owner)
     RecyclerView recycler_car_owner;
@@ -43,29 +44,35 @@ public class CarOwnersActivity extends AppCompatActivity{
         setContentView(R.layout.activity_car_owners);
         init();
         initView();
-        //spotDialog.show();
-        readCarOwner(1,10);
+        spotDialog.show();
+        try {
+            readCsvFile();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (scrollY == v.getChildAt(0).getMeasuredHeight()-v.getMeasuredHeight()){
-                    start++;
-                    //progress_bar.setVisibility(View.VISIBLE);
-                    readCarOwner(start, limit);
+                    progress_bar.setVisibility(View.VISIBLE);
+                    try {
+                        readCsvFile();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
 
     }
 
-    //read Csv data and display
-    private void readCarOwner(int start, int limit) {
 
+    /*
+    private void readCarOwner(int start, int limit) {
         InputStream inputStream = getResources().openRawResource(R.raw.car_ownsers_data);
         CsvReader csv = new CsvReader(inputStream);
         List<String[]> ownerList = csv.readList().subList(start,limit);
         //carOwnerModelList.toString() = csv.readList().subList(0,10);
-
         for (String[] resultList : ownerList) {
             model.setFirst_name(resultList[1]);
             model.setLast_name(resultList[2]);
@@ -78,15 +85,26 @@ public class CarOwnersActivity extends AppCompatActivity{
             model.setJob_title(resultList[9]);
             model.setBio(resultList[10]);
 
-            carOwnerModelList.add(model);
-            Log.d("MyActivity", "Result " + carOwnerModelList);
         }
-        //Log.d("MyActivity", "Result " + carOwnerModelList);
+            carOwnerModelList.add(model);
+
         adapter = new CarOwnerAdapter(getApplicationContext(),  carOwnerModelList);
         adapter.notifyDataSetChanged();
         recycler_car_owner.setAdapter(adapter);
-        //progress_bar.setVisibility(View.GONE);
+        progress_bar.setVisibility(View.GONE);
 
+    }
+
+     */
+    
+    //read Csv data and display
+    public void readCsvFile() throws FileNotFoundException{
+        spotDialog.dismiss();
+        List<CarOwnerModel> carOwnerModelList = new CSVRead().readCsvFile();
+        adapter = new CarOwnerAdapter(getApplicationContext(),  carOwnerModelList);
+        adapter.notifyDataSetChanged();
+        recycler_car_owner.setAdapter(adapter);
+        progress_bar.setVisibility(View.GONE);
     }
 
     //initialize spotDialog and linearLayoutManager
